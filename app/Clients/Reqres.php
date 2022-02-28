@@ -15,13 +15,28 @@ class Reqres
      * @param Client $client
      * @return array
      */
-    public function callApi(Client $client)
+    public function callApi(Client $client, $page)
     {
-        $response = Http::get($client->base_uri)->json('data');
+        // initial call
+        $response = Http::get($client->base_uri);
 
-        $this->noralise($response);
+        // do we have any records
+        if ($response->json('total') > 0) {
+            // how many pages do we have
+            $total_pages = $response->json('total_pages');
 
-        return $this->data;
+            // start from page=1 and increment for each page
+            for ($i = $page; $i <= $total_pages; $i++) {
+                $response = Http::get($client->base_uri . '?page=' . $i)->json('data');
+
+                // send data for normalisation for each page
+                $this->normalise($response);
+            }
+
+            return $this->data;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -31,13 +46,13 @@ class Reqres
      * we could be calling multiple client api's that all need to be normalised to accommodate our db schema
      * @param $response
      */
-    public function noralise($response)
+    public function normalise($response)
     {
-        foreach ($response as $record){
+        foreach ($response as $record) {
             $this->data[] = [
                 "client_id" => $record['id'],
                 "email" => $record['email'],
-                "name" => $record['first_name'].' '.$record['last_name'],
+                "name" => $record['first_name'] . ' ' . $record['last_name'],
                 "avatar" => $record['avatar'],
                 "password" => bcrypt($record['email']),
             ];

@@ -5,14 +5,16 @@ namespace App\Console\Commands;
 use App\Models\Client;
 use Illuminate\Console\Command;
 
-class ClientApiCommmand extends Command
+class ClientApiCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'client:api {action=index : use index to retrieve or store to persist the API}';
+    protected $signature = 'client:api
+                {action=store : use index to retrieve or store to persist the API}
+                {--page=1 : page offset, all api calls start from page 1, unless otherwise}';
 
     /**
      * The console command description.
@@ -35,10 +37,12 @@ class ClientApiCommmand extends Command
      * Execute the console command.
      * for each Client API model delegate to the handle method
      * by default action = index
-     * @return int
      */
     public function handle()
     {
-        Client::all()->each->handle($this->argument('action'));
+        Client::all()->each->handle(
+            $this->argument('action'),
+            $this->option ('page')
+        );
     }
 }
