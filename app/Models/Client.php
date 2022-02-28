@@ -32,6 +32,12 @@ class Client extends Model
         return (new ClientFactory())->make($this)->callApi($this);
     }
 
+    /**
+     * insert the retrieved api data into the users model
+     * Uses the new upsert method introduced in Laravel 8
+     * prior to Laravel 8 we would have had to use the firstOrCreate() method
+     * and then the fill() method to persist the data if found
+     */
     public function store()
     {
         User::upsert(

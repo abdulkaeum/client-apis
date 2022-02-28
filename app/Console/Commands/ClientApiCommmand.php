@@ -33,7 +33,8 @@ class ClientApiCommmand extends Command
 
     /**
      * Execute the console command.
-     *
+     * for each Client API model delegate to the handle method
+     * by default action = index
      * @return int
      */
     public function handle()
