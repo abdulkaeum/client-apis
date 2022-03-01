@@ -16,6 +16,10 @@ class ClientFactory
     {
         $class = "App\\Clients\\" . Str::studly(Str::replace(' ', '', Str::lower($client->name)));
 
+        if (! class_exists($class)) {
+            throw new \Exception('Client class not found for: '. $client->name);
+        }
+
         return new $class;
     }
 }
