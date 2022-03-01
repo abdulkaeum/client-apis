@@ -21,7 +21,8 @@ class Reqres
         $response = Http::get($client->base_uri);
 
         // do we have any records
-        if ($response->json('total') > 0) {
+        if ($response->ok() && $response->json('total') > 0) {
+
             // how many pages do we have
             $total_pages = $response->json('total_pages');
 
