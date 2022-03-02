@@ -39,9 +39,14 @@ perform any data normalisation.
 
 #### How would we use the command in a schedule to repeatedly update the users from the API
 
+#### Features
+- Uses the HTTP client introduced in Laravel 7
+- Uses the new upsert method introduced in Laravel 8
+
 ### Screenshots
+
+<img alt="" src="public/screenshots/Reqres.PNG">
 
 <img alt="" src="public/screenshots/command.PNG">
 
-<img alt="" src="public/screenshots/the-last%20-record.PNG">
-
+<img alt="" src="public/screenshots/the-last-record.PNG">
