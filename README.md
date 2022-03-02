@@ -25,6 +25,11 @@ My solution uses the database to store API end points to a Client
 model, uses an associated class to call the API end points and 
 performs any data normalisation. The Users model also includes a client_id column to associate it with its source of origin.
 
+### Installation and run
+- php artisan migrate
+- php artisan db:seed
+- php artisan client:api
+
 ### Other factors to consider
 #### 1. What testing can we perform using PHPUnit
 - Given we have a client model = Reqres
