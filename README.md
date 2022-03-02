@@ -38,3 +38,10 @@ perform any data normalisation.
 #### How would we respond if the API we are calling goes down
 
 #### How would we use the command in a schedule to repeatedly update the users from the API
+
+### Screenshots
+
+<img alt="" src="public/screenshots/command.PNG">
+
+<img alt="" src="public/screenshots/the-last%20-record.PNG">
+
