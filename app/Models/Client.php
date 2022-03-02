@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Clients\ClientFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\RequestException;
 
 class Client extends Model
 {
@@ -29,7 +30,17 @@ class Client extends Model
      */
     public function index($page)
     {
-        return (new ClientFactory())->make($this)->callApi($this, $page);
+        try {
+            return (new ClientFactory())->make($this)->callApi($this, $page);
+        } catch (\Exception $e) {
+            // exception for ClientFactory
+            echo $e->getMessage();
+            exit();
+        } catch (RequestException $e) {
+            // exception for HTTP client
+            echo $e->getMessage();
+            exit();
+        }
     }
 
     /**
@@ -43,14 +54,18 @@ class Client extends Model
         // used only for testing the artisan command
         User::truncate();
 
-        User::upsert(
-            $this->index($page),
-            ['client_id'],
-            [
-                'email',
-                'name',
-                'avatar'
-            ]
-        );
+        $data = $this->index($page);
+
+        if (is_array($data)) {
+            User::upsert(
+                $data,
+                ['client_id'],
+                [
+                    'email',
+                    'name',
+                    'avatar'
+                ]
+            );
+        }
     }
 }

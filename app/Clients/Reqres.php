@@ -14,13 +14,14 @@ class Reqres
      * uses the HTTP client introduced in Laravel 7
      * @param Client $client
      * @return array
+     * @throws \Illuminate\Http\Client\RequestException
      */
     public function callApi(Client $client, $page)
     {
         // initial call
-        $response = Http::get($client->base_uri);
+        $response = Http::get($client->base_uri)->throw();
 
-        // do we have any records
+        // is the response status 200 and do we have any records
         if ($response->ok() && $response->json('total') > 0) {
 
             // how many pages do we have
@@ -28,15 +29,13 @@ class Reqres
 
             // start from page=1 and increment for each page
             for ($i = $page; $i <= $total_pages; $i++) {
-                $response = Http::get($client->base_uri . '?page=' . $i)->json('data');
+                $response = Http::get($client->base_uri . '?page=' . $i)->throw()->json('data');
 
                 // send data for normalisation for each page
                 $this->normalise($response);
             }
 
             return $this->data;
-        } else {
-            return null;
         }
     }
 
