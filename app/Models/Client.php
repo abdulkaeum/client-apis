@@ -51,8 +51,8 @@ class Client extends Model
      */
     public function store($page)
     {
-        // used only for testing the artisan command
-        User::truncate();
+        // used only for testing the artisan command to check if records are being updated
+        //User::truncate();
 
         $data = $this->index($page);
 
