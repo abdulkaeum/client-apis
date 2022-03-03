@@ -24,6 +24,7 @@ Main tasks:
 My solution uses the database to store API end points to a Client
 model, uses an associated class to call the API end points and 
 performs any data normalisation. The Users model also includes a client_id column to associate it with its source of origin.
+With this solution we can have a front-end to manage the API's i.e. switch them off, set time calls, add new API's etc
 
 ### Installation and run
 - php artisan migrate
