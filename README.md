@@ -43,7 +43,7 @@ performs any data normalisation. The Users model also includes a client_id colum
 #### 2. How would we respond if the API we are calling goes down
 - We would need to record/log which client class API failed to make its call
 - At this point maybe use a sms service or email/notify an administrator to switch the status of the API to in-active 
-- Or automatically switch the API status off and then notify the administrator
+- Or automatically switch the API status off upon failure and then notify the administrator
 
 #### 3. How would we use the command in a schedule to repeatedly update the users from the API
 - The command uses the Laravel 7 upsert. This takes an array of arrays (in this case our response data) to insert, identifies if the record already exists and if so an array of what should be updated
@@ -56,7 +56,7 @@ performs any data normalisation. The Users model also includes a client_id colum
 - Add a schedule time column on the Client model as we may only want to call the API's at a specific time
 - Create own exception classes to target more specific error handling per Client
 - Move the logic for retrieving and storing the api data into a trait and away from model 
-- Add a history model to log api calls, when was it called, how many records were retrieved, new and updated
+- Add a history model to log API calls, when was it called, how many records were retrieved, new and updated
 - We could examine model attribute using the isDirty and getChanges to create a log of changes, although this could accumulate to too many additional database queries potentially slowing our process down
 
 ### Features

@@ -45,6 +45,6 @@ class ClientApiCommand extends Command
             $this->option ('page')
         );
 
-        $this->info('Client API command complete');
+        $this->info('Client API command execution complete');
     }
 }
