@@ -75,4 +75,8 @@ performs any data normalisation. The Users model also includes a client_id colum
 
 - An example of data retrieved and stored against the User model from the 2nd page of the pagination https://reqres.in/api/users?page=2
 
-<img alt="" src="public/screenshots/the-last-record.PNG">
+<img alt="" src="public/screenshots/page2.PNG">
+
+- An example retrieving all data (page 1 & 2) after retrieving page 2 first. This would have updated the users from page 2 but inserted those from page 1
+
+<img alt="" src="public/screenshots/all.PNG">

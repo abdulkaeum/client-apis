@@ -17,9 +17,9 @@ class Client extends Model
      * by default the command will call the index method otherwise if submitted, the store method
      * @param $action
      */
-    public function handle($action, int $page)
+    public function handle($action, int $page, bool $all)
     {
-        $action == 'store' ? $this->store($page) : $this->index($page);
+        $action == 'store' ? $this->store($page, $all) : $this->index($page, $all);
     }
 
     /**
@@ -28,10 +28,10 @@ class Client extends Model
      * when we know what class we are working with, we can call the api using callApi()
      * @return mixed
      */
-    public function index($page)
+    public function index($page, $all)
     {
         try {
-            return (new ClientFactory())->make($this)->callApi($this, $page);
+            return (new ClientFactory())->make($this)->callApi($this, $page, $all);
         } catch (\Exception $e) {
             // exception for ClientFactory
             echo $e->getMessage();
@@ -49,14 +49,14 @@ class Client extends Model
      * prior to Laravel 8 we would have had to use the firstOrCreate() method
      * and then the fill() method to persist the data if found
      */
-    public function store($page)
+    public function store($page, $all)
     {
         // used only for testing the artisan command to check if records are being updated
         //User::truncate();
 
-        $data = $this->index($page);
+        $data = $this->index($page, $all);
 
-        if (is_array($data)) {
+        if (is_array($data) && count($data) > 0) {
             User::upsert(
                 $data,
                 ['client_id'],

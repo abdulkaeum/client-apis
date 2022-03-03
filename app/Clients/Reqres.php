@@ -16,7 +16,7 @@ class Reqres
      * @return array
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function callApi(Client $client, $page)
+    public function callApi(Client $client, int $page, bool $all)
     {
         // initial call
         $response = Http::get($client->base_uri)->throw();
@@ -27,11 +27,22 @@ class Reqres
             // how many pages do we have
             $total_pages = $response->json('total_pages');
 
-            // start from page=1 and increment for each page
-            for ($i = $page; $i <= $total_pages; $i++) {
-                $response = Http::get($client->base_uri . '?page=' . $i)->throw()->json('data');
+            // have we supplied a page that does not exist
+            if ($page > $total_pages) return null;
 
-                // send data for normalisation for each page
+            if ($all) {
+                // perform full set page calls / start from page=1 and increment for each page we have
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    $response = Http::get($client->base_uri . '?page=' . $i)->throw()->json('data');
+
+                    // send data for normalisation for each page
+                    $this->normalise($response);
+                }
+            } else {
+                // perform single page calls
+                $response = Http::get($client->base_uri . '?page=' . $page)->throw()->json('data');
+
+                // send data for normalisation for the page
                 $this->normalise($response);
             }
 

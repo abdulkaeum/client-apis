@@ -14,7 +14,8 @@ class ClientApiCommand extends Command
      */
     protected $signature = 'client:api
                 {action=store : use index to retrieve or store to persist the API}
-                {--page=1 : page offset, all api calls start from page 1, unless otherwise}';
+                {--page=1 : the paginated page which you would like to fetch data for}
+                {--all=0 : set to 1 to fetch all paginated pages from page 1+}';
 
     /**
      * The console command description.
@@ -42,7 +43,8 @@ class ClientApiCommand extends Command
     {
         Client::all()->each->handle(
             $this->argument('action'),
-            $this->option ('page')
+            $this->option('page'),
+            $this->option('all')
         );
 
         $this->info('Client API command execution complete');
