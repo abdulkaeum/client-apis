@@ -77,6 +77,10 @@ performs any data normalisation. The Users model also includes a client_id colum
 
 <img alt="" src="public/screenshots/page2.PNG">
 
-- An example retrieving all data (page 1 & 2) after retrieving page 2 first. This would have updated the users from page 2 but inserted those from page 1
+- An example retrieving all data (page 1 & 2) after retrieving page 2 first. This would have updated the users from page 2 but inserted those from page 1 using the Eloquent upsert method
 
 <img alt="" src="public/screenshots/all.PNG">
+
+- Retrieve a fresh set of API data from anywhere within the application
+
+<img alt="" src="public/screenshots/freshdata.PNG">
