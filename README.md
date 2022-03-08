@@ -51,6 +51,7 @@ With this solution we can have a front-end to manage the API's i.e. switch them 
 - The solution stores a client_id column on the users table to link it to the API's users ID
 
 ### Further solutions I've considered
+- Introduce Polymorphism and make use of an Interface for the callApi() and normalise() methods
 - Depending on the amount of records we have in the Client model we may want to use chunking
 - Many API's would have stored their first name and last name in separate columns and so should we 
 - Add a status column on the Client model so we can activate and de-activate any API's 
